@@ -1,0 +1,9 @@
+
+add  - add a new droplets
+
+Usage: opendrop [-i | -n] add
+
+Options:
+    -i : add droplet ip address
+    -n : add droplet name
+

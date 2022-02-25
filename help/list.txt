@@ -1,0 +1,10 @@
+
+list - lists all saved droplets
+
+Usage: opendrop [-a | -i | -n] list 
+
+Options:
+    -a  : lists all stored names and ip addresses
+    -i : lists all stored ip addresses
+    -n : lists all stored names
+

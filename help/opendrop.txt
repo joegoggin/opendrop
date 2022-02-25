@@ -1,0 +1,9 @@
+
+Usage: opendrop [options] command 
+
+Commands:
+
+open - opens an ssh session for a digital ocean droplet
+list - list all saved droplets
+add  - add a new droplets
+

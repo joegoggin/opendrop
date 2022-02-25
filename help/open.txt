@@ -1,0 +1,9 @@
+
+open - opens an ssh session for a digital ocean droplet
+
+Usage: opendrop [-i | -n] open 
+
+Options:
+    -i : open droplet with ip address
+    -n : open droplet by name
+

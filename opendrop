@@ -1,0 +1,196 @@
+#! /usr/bin/bash
+
+# VARIABLES
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+COMMAND=${@: -1}
+LISTALL=false
+LISTIP=false
+LISTNAME=false
+
+# HANDLE HELP
+function help {
+    if [ "$COMMAND" == "open" ]
+    then
+        cd $SCRIPT_DIR
+        cat ./help/open.txt
+    elif [ "$COMMAND" == "list" ]
+    then
+        cd $SCRIPT_DIR
+        cat ./help/list.txt
+    elif [ "$COMMAND" == "add" ]
+    then
+        cd $SCRIPT_DIR
+        cat ./help/add.txt
+    else
+        cd $SCRIPT_DIR
+        cat ./help/opendrop.txt
+    fi
+}
+
+# CHECK FLAGS
+while getopts :n:i:h:a: FLAGS;
+do
+    case $FLAGS in
+        n) 
+            if [ "$COMMAND" == "list" ]
+            then
+                LISTNAME=true
+            else
+                if [[ $OPTARG =~ ^[0-9a-z+-]+$ ]]
+                then
+                    NAME=$OPTARG
+                else 
+                    echo "$OPTARG is not a vaild name!"
+                    exit 1
+                fi
+            fi
+            ;;
+        i)
+            if [ "$COMMAND" == "list" ]
+            then
+                LISTIP=true
+            else
+                if [[ $OPTARG =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
+                then 
+                    IP=$OPTARG
+                else 
+                    echo "$OPTARG is not a vaild ip address!"
+                    exit 1
+                fi
+            fi
+            ;;
+        h) 
+            help
+            exit 1
+            ;;
+        a)
+            LISTALL=true
+            ;;
+        ?) 
+            echo "-$OPTARG is not an option"
+            help
+            exit 1
+    esac
+done
+
+# FUNCTIONS
+function getIpByName {
+    cd $SCRIPT_DIR
+    if [ -f "droplets.txt" ]
+    then
+        while read -r CURRENT_LINE
+            do  
+                local DROPLET=($CURRENT_LINE)
+                if [ "$NAME" == ${DROPLET[0]} ]
+                then
+                    echo ${DROPLET[1]}
+                fi
+        done < "./droplets.txt"
+    fi
+}
+
+function listIp {
+    cd $SCRIPT_DIR
+    if [ -f "droplets.txt" ]
+    then
+        while read -r CURRENT_LINE
+            do
+                local DROPLET=($CURRENT_LINE)
+                echo ${DROPLET[1]}
+        done < "./droplets.txt"
+    fi
+}
+
+function listName {
+    cd $SCRIPT_DIR
+    if [ -f "droplets.txt" ]
+    then
+        while read -r CURRENT_LINE
+            do
+                local DROPLET=($CURRENT_LINE)
+                echo ${DROPLET[0]}
+        done < "./droplets.txt"
+    fi
+}
+
+function open {
+    if [ "$IP" != "" ] && [[ $IP =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
+    then 
+        cd ~/.ssh
+        ssh -i ./digital-ocean-key root@"$IP"
+    elif [ "$NAME" != "" ] && [[ $NAME =~ ^[0-9a-z+-]+$ ]]
+    then
+        if [ "$(getIpByName)" != "" ]
+        then
+            IP=$(getIpByName)
+            cd ~/.ssh
+            ssh -i ./digital-ocean-key root@"$IP"
+        else
+            echo ""
+            echo "$NAME doesn't exist! You can add it by using the add command."
+            echo ""
+            echo "example: opendrop -i 1.1.1.1 -n name add"
+            echo ""
+        fi
+    else 
+        help
+    fi
+}
+
+function list {
+    if [ "$SCRIPT_DIR/droplets.txt" ]
+    then
+        if $LISTALL
+        then 
+            cd $SCRIPT_DIR
+            cat droplets.txt
+        elif $LISTIP
+        then
+            listIp
+        elif $LISTNAME
+        then
+            listName
+        else 
+            help
+        fi
+    else
+        echo ""
+        echo "You don't currently have any droplets saved! You can add one using the add command."
+        echo ""
+        echo "example: opendrop -i 1.1.1.1 -n name add"
+        echo ""
+    fi
+}
+
+function add {
+    if [ "$IP" == "" ] || [ "$NAME" == "" ]
+    then
+        echo ""
+        echo "Name and ip are both required to add a drop"
+        echo "use -i to add ip address and -n to add name"
+        echo ""
+        echo "example: opendrop -i 1.1.1.1 -n name add"
+        echo ""
+    else
+        cd $SCRIPT_DIR
+        echo "$NAME $IP" >> droplets.txt
+        echo "$NAME added to droplets!"
+    fi
+}
+
+function runCommand {
+    if [ "$COMMAND" == "open" ]
+    then
+        open
+    elif [ "$COMMAND" == "list" ]
+    then
+        list
+    elif [ "$COMMAND" == "add" ]
+    then
+        add
+    else
+        help
+    fi
+}
+
+runCommand
