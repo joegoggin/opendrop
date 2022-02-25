@@ -46,7 +46,7 @@ Options:
     -i : lists all stored ip addresses
     -n : lists all stored names
 
-example: opendrop 
+example: opendrop -a list
 
 ************
 * * add  * *
@@ -57,4 +57,6 @@ Usage: opendrop [-i | -n] add
 Options:
     -i : add droplet ip address
     -n : add droplet name
+   
+example: opendrop -i 1.1.1.1 -n name add
 
