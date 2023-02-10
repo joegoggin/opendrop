@@ -12,58 +12,74 @@ explaining it: https://www.youtube.com/watch?v=abN6bvyPRxQ&ab_channel=Linode
 You can also just run it from within this directory by adding bash infront of
 the command
 
-`
+
 example: bash opendrop -n name open 
 
 
-Usage: opendrop [options] command 
+Usage: 
+```
+opendrop [options] command 
+```
 
 Commands:
 
 open - opens an ssh session for a digital ocean droplet
 list - list all saved droplets
 add  - add a new droplets
-`
 
-************
+
 # open 
-************
-`
-Usage: opendrop [-i | -n] open 
+
+Usage: 
+```
+opendrop [-i | -n] open 
+```
 
 Options:
     -i : open droplet with ip address
     -n : open droplet by name
 
-example 1: opendrop -i 1.1.1.1 open
+example 1: 
+```
+opendrop -i 1.1.1.1 open
+```
 
-example 2: opendrop -n name open
-`
+example 2: 
+```
+opendrop -n name open
+```
 
-************
 # list
-************
-`
-Usage: opendrop [-a | -i | -n] list 
+
+Usage: 
+```
+opendrop [-a | -i | -n] list 
+```
 
 Options:
     -a  : lists all stored names and ip addresses
     -i : lists all stored ip addresses
     -n : lists all stored names
 
-example: opendrop -a list
-`
+example:
+```
+opendrop -a list
+```
 
-************
 # add 
-************
-`
-Usage: opendrop [-i | -n] add
+
+Usage: 
+```
+opendrop [-i | -n] add
+```
 
 Options:
     -i : add droplet ip address
     -n : add droplet name
    
-example: opendrop -i 1.1.1.1 -n name add
-`
+example: 
+```
+opendrop -i 1.1.1.1 -n name add
+```
+
 
