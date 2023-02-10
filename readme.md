@@ -1,10 +1,12 @@
+# Open Drop
+
 opendrop is a script I made to automate opening ssh sessions to access
 digital ocean droplets
 
-* * note that this script assumes that you have already set up an ssh key with 
+* note that this script assumes that you have already set up an ssh key with 
 digital ocean and stored your private key inside ~/.ssh/digital-ocean-key
 
-* * Also note that in order to use the syntax below you need to add a path to 
+* Also note that in order to use the syntax below you need to add a path to 
 your project directory into your .bashrc file. This video does a good job of 
 explaining it: https://www.youtube.com/watch?v=abN6bvyPRxQ&ab_channel=Linode
 You can also just run it from within this directory by adding bash infront of
@@ -22,7 +24,7 @@ list - list all saved droplets
 add  - add a new droplets
 
 ************
-* * open * *
+# open 
 ************
 
 Usage: opendrop [-i | -n] open 
@@ -36,7 +38,7 @@ example 1: opendrop -i 1.1.1.1 open
 example 2: opendrop -n name open
 
 ************
-* * list * *
+# list
 ************
 
 Usage: opendrop [-a | -i | -n] list 
@@ -49,7 +51,7 @@ Options:
 example: opendrop -a list
 
 ************
-* * add  * *
+# add 
 ************
 
 Usage: opendrop [-i | -n] add
