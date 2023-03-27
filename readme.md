@@ -10,7 +10,7 @@ digital ocean and stored your private key inside ~/.ssh/digital-ocean-key
 your project directory into your .bashrc file. This video does a good job of 
 explaining it: https://www.youtube.com/watch?v=abN6bvyPRxQ&ab_channel=Linode
 
-* You can also just run it from within this directory by adding bash infront of
+* You can also just run it from within this directory by adding bash in front of
 the command
 
 example: 
